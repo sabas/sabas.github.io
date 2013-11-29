@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Stefano Sabatini Homepage</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Stefano Sabatini">
+    <link rel="shortcut icon" href="media/favicon.ico" />
+
+    <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
+
+     <link rel="shortcut icon" href="../../media/favicon.ico">
+                                   
+<script type="text/javascript">
+/*
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-13244504-2']);
+  _gaq.push(['_setDomainName', 'stefanosabatini.eu']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+*/
+</script>
+
+<style>
+.navbar-inverse .navbar-nav li a {
+line-height: 60px;
+}
+.img140 {
+height: 140px;
+}
+.center{text-align:center;}
+.row{padding:15px;}
+</style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         <a class="navbar brand" href="../../index.html"><img src="../../media/logo.png" style="height:60px;"/></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+           <li><a href="../../index.html">Home</a></li>
+           <li><a href="../../projects.html">Projects</a></li>
+           <li><a href="../../about.html">About me</a></li>
+          </ul>
+        </div>
+      </div>
+
+       <div class="row">
+
+<style>
+pre{background-color:#f8f8ff;}
+</style>
+
+<script type="text/javascript" src="../../vendor/highlight/highlight.pack.js"></script>
+<link rel="stylesheet" href="../../vendor/highlight/styles/github.css"/>
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+
+<h1>Open Nuraghe</h1>
+<p>Estrazione da OpenStreetMap dei nuraghe descritti secondo lo schema proposto nel Novembre 2011. (vedi i tag <a href="http://wiki.openstreetmap.org/wiki/IT:How_to_map_a#Nuraghe">sul wiki</a>)</p>
+<p>La demo è ospitata su <a href="http://sardinia-opendata.github.io/Open-Nuraghe/">Sardinia Open Data</a></p>
+
+<br style="clear:both"/>
+<h2>Note tecniche: estrazione con Overpass API</h2>
+
+<p>Con Overpass Turbo basta usare direttamente <a href="http://overpass-turbo.eu/?key=megalith_type&value=nuraghe&template=key-value">questa query</a>.</p>
+<p>Il risultato viene esportato e compresso per essere visualizzato, viene aggiunto anche "var test=" all'inizio.</p>
+
+<h2>Note tecniche: estrazione tramite database PostgreSQL</h2>
+
+<h3>Proiezione wgs84</h3>
+<pre><code class="sql">INSERT INTO spatial_ref_sys (srid, auth_name, auth_srid, proj4text, srtext) 
+VALUES ( 94326, 'epsg', 4326, '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ', 'GEOGCS["WGS 84",DATUM["WGS_1984",
+SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],
+UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]');
+</code></pre>
+
+<h3>Trasformazione coordinate ed output geojson</h3>
+<pre><code class="sql">SELECT ST_AsGeoJSON(ST_Transform(way,94326)) FROM planet_osm_polygon where megalith_type='nuraghe';
+</code></pre>
+
+<h3>Geojson dei nuraghe</h3>
+
+<p>Modificata da <a href="http://www.postgresonline.com/journal/archives/267-Creating-GeoJSON-Feature-Collections-with-JSON-and-PostGIS-functions.html">postgresonline</a>.
+<p>Da export di pgadmin3, no column names e no quoting, file di output chiamato 'test'.</p>
+<p>La query viene fatta sul tag 'megalith_type=nuraghe'.</p>
+<pre><code class="sql">(SELECT array_to_json(array_agg(f)) As features
+ FROM (SELECT 'Feature' As type
+    , ST_AsGeoJSON(ST_Transform(lg.way,94326)) As geometry
+    , row_to_json((SELECT l FROM (SELECT osm_id, name) As l
+      )) As properties
+   FROM planet_osm_polygon As lg   where megalith_type='nuraghe'
+ UNION ALL
+SELECT 'Feature' As type
+    , ST_AsGeoJSON(ST_Transform(lg.way,94326)) As geometry
+    , row_to_json((SELECT l FROM (SELECT osm_id, name) As l
+      )) As properties
+   FROM planet_osm_point As lg   where megalith_type='nuraghe') As f)
+</code></pre>
+
+<h3>Pulizia dell'output</h3>
+<p>bash per togliere escape e quotes di troppo</p>
+<pre><code class="bash">sed -i 's/\\"/"/g' test 
+sed -i 's/"{/{/g' test 
+sed -i 's/}"/}/g' test 
+sed -i 's/^/var test=/g' test
+cp test test.js
+</code></pre>
+
+<h2>Note tecniche: visualizzazione</h2>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;geo.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;map&quot; style=&quot;width:800px;height:500px; margin-right:10px; float:left;&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+function onEachFeature(feature, layer) {
+
+    if (feature.properties &amp;&amp; feature.properties.tags.name) {
+        layer.bindPopup(feature.properties.tags.name);
+    }
+}
+
+var geojsonMarkerOptions = {
+    radius:2
+};
+
+
+L.geoJson(test, {
+    onEachFeature: onEachFeature,
+     pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
+}).addTo(map);
+&lt;/script&gt;
+</code></pre>
+        </div>
+      
+      <footer>
+        <p class="pull-right"><a onclick="$(this).click(function() {$('html,body').animate({scrollTop:0},800);});">Back to top</a></p>
+        <p>&copy; 2013 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
+      </footer>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="vendor/js/bootstrap.min.js"></script>	  
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version='0.6' upload='true' generator='JOSM'>
+  <node id='-14130' visible='true' lat='44.30950061797493' lon='8.475225428977222'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='7' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14129' visible='true' lat='44.339054222933406' lon='8.509850903830761'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='1' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14128' visible='true' lat='44.300718243726294' lon='8.475450223240328'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='2' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14127' visible='true' lat='44.29856635713969' lon='8.452338134855903'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='5' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14126' visible='true' lat='44.3079333187698' lon='8.481355728582495'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='6' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14125' visible='true' lat='44.31496489157515' lon='8.474686025920334'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='3' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+  <node id='-14124' visible='true' lat='44.313974783553775' lon='8.482904216802325'>
+    <tag k='amenity' v='car_sharing' />
+    <tag k='operator' v='Savona Car Sharing' />
+    <tag k='ref' v='4' />
+    <tag k='url' v='http://www.savonacarsharing.it' />
+  </node>
+</osm>

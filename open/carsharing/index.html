@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Stefano Sabatini Homepage</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Stefano Sabatini">
+    <link rel="shortcut icon" href="media/favicon.ico" />
+
+    <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
+
+     <link rel="shortcut icon" href="../../media/favicon.ico">
+                                   
+<script type="text/javascript">
+/*
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-13244504-2']);
+  _gaq.push(['_setDomainName', 'stefanosabatini.eu']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+*/
+</script>
+
+<style>
+.navbar-inverse .navbar-nav li a {
+line-height: 60px;
+}
+.img140 {
+height: 140px;
+}
+.center{text-align:center;}
+.row{padding:15px;}
+</style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         <a class="navbar brand" href="../../index.html"><img src="../../media/logo.png" style="height:60px;"/></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+           <li><a href="../../index.html">Home</a></li>
+           <li><a href="../../projects.html">Projects</a></li>
+           <li><a href="../../about.html">About me</a></li>
+          </ul>
+        </div>
+      </div>
+
+       <div class="row">
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+<script src="../../media/map.js"></script>
+
+<div id="map" style="width:50%;height:300px; margin-right:10px; float:left;"></div>
+
+<h1>Open Car Sharing</h1>
+
+<p>Qui sono elencati i download dei dati relativi al Car Sharing di Genova e di Savona.</p>
+
+<p><a href="carsharing.ods">Scarica il foglio OpenDocument</a> (Licenza mista <a href="http://creativecommons.org/choose/zero/?lang=it">CC0</a> / <a href="http://opendatacommons.org/licenses/odbl/">ODBL</a>)</p>
+
+<a href="carsharing.xls">Scarica il foglio excel</a> (Licenza mista <a href="http://creativecommons.org/choose/zero/?lang=it">CC0</a> / <a href="http://opendatacommons.org/licenses/odbl/">ODBL</a>)</p>
+
+<p>Scarica il file in formato CSV per <a href="genova.csv">Genova</a> o per <a href="savona.csv">Savona</a> (Licenza mista <a href="http://creativecommons.org/choose/zero/?lang=it">CC0</a> / <a href="http://opendatacommons.org/licenses/odbl/">ODBL</a>)</p>
+<br style="clear:both;"/>
+
+<script>
+var map = initMap(44.406,8.791, 10);
+
+
+putMarker(map, '','44.4103933','8.9350658','1');
+putMarker(map, '','44.4110796','8.9388594','2');
+putMarker(map, '','44.4124848','8.9273775','3');
+putMarker(map, '','44.4104736','8.9057435','4');
+putMarker(map, '','44.4142749','8.9286671','5');
+putMarker(map, '','44.404704','8.9479208','6');
+putMarker(map, '','44.417745','8.9221933','7');
+putMarker(map, '','44.4070375','8.9280977','8');
+putMarker(map, '','44.4041504','8.9307999','9');
+putMarker(map, '','44.4144117','8.9339644','10');
+putMarker(map, '','44.4158887','8.9356756','11');
+putMarker(map, '','44.4140087','8.9459449','12');
+putMarker(map, '','44.3987657','8.9452471','13');
+putMarker(map, '','44.4068256','8.9325911','14');
+putMarker(map, '','44.4015337','8.9378226','15');
+putMarker(map, '','44.4098486','8.9404825','16');
+putMarker(map, '','44.4225881','8.8839244','17');
+putMarker(map, '','44.3951761','8.9933874','18');
+putMarker(map, '','44.4080103','8.9748909','19');
+putMarker(map, '','44.4140409','8.8817755','20');
+putMarker(map, '','44.4113712','8.9551059','21');
+putMarker(map, '','44.4070278','8.9609293','22');
+putMarker(map, '','44.4126817','8.9587882','23');
+putMarker(map, '','44.4135999','8.9541073','24');
+putMarker(map, '','44.4224508','8.9470413','25');
+putMarker(map, '','44.4058489','8.9361435','26');
+putMarker(map, '','44.4161136','8.9191134','27');
+putMarker(map, '','44.3952903','8.9486807','28');
+putMarker(map, '','44.4023309','8.9498025','29');
+putMarker(map, '','44.4022033','8.942403','30');
+putMarker(map, '','44.4206398','8.9301819','31');
+putMarker(map, '','44.4189539','8.914958','32');
+putMarker(map, '','44.4001412','8.9814352','33');
+putMarker(map, '','44.3842596','9.0313714','34');
+putMarker(map, '','44.4246389','8.8121712','35');
+putMarker(map, '','44.427673','8.8109461','36');
+putMarker(map, '','44.3978052','8.9644713','37');
+putMarker(map, '','44.4164687','8.8761026','38');
+putMarker(map, '','44.3969746','8.9530725','39');
+putMarker(map, '','44.4017353','8.954418','40');
+putMarker(map, '','44.4104548','8.9336963','41');
+putMarker(map, '','44.4397676','8.9644824','42');
+putMarker(map, '','44.3879795','8.9948634','43');
+putMarker(map, '','44.3975411','8.9882766','44');
+putMarker(map, '','44.3842864','9.0197233','45');
+putMarker(map, '','44.4243081','8.8493034','46');
+putMarker(map, '','44.4235829','8.8534421','47');
+putMarker(map, '','44.3919462','8.9861856','48');
+putMarker(map, '','44.4339965','8.892856','49');
+putMarker(map, '','44.4113091','8.8958245','50');
+putMarker(map, '','44.3902757','8.9740199','51');
+putMarker(map, '','44.4222134','8.8887365','52');
+putMarker(map, '','44.4284793','8.8932941','53');
+putMarker(map, '','44.4125721','8.8868834','54');
+putMarker(map, '','44.4225882','8.9200411','55');
+putMarker(map, '','44.4066255','8.9341639','56');
+putMarker(map, '','44.4341646','8.96064','57');
+
+
+putMarker(map, '','44.3390542','8.5098509','1');
+putMarker(map, '','44.3007182','8.4754502','2');
+putMarker(map, '','44.3149649','8.474686','3');
+putMarker(map, '','44.3139748','8.4829042','4');
+putMarker(map, '','44.2985664','8.4523381','5');
+putMarker(map, '','44.3079333','8.4813557','6');
+putMarker(map, '','44.3095006','8.4752254','7');
+
+</script>
+        </div>
+      
+      <footer>
+        <p class="pull-right"><a onclick="$(this).click(function() {$('html,body').animate({scrollTop:0},800);});">Back to top</a></p>
+        <p>&copy; 2013 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
+      </footer>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="../../vendor/js/bootstrap.min.js"></script>	  
+  </body>
+</html>

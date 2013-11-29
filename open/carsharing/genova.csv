@@ -1,0 +1,183 @@
+id	nome parcheggio		Latitudine	Longitudine		Latitudine	Longitudine		provincia	comune	indirizzo	info
+1	Piazza Fontane Marose		44.4103933	8.9350658		"44°24'37"""	"8°56'06"""		GENOVA	GENOVA	Piazza Fontane Marose	Lato opposto fermata Bus. 
+2	Piazza Marsala - Angolo Via Palestro		44.4110796	8.9388594		"44°24'39"""	"8°56'20"""		GENOVA	GENOVA	Piazza Marsala - Angolo Via Palestro	Fronte Civico 4
+3	Via Gramsci		44.4124848	8.9273775		"44°24'44"""	"8°55'38"""		GENOVA	GENOVA	Via Gramsci	Fronte Civico 1
+4	Via di Francia 		44.4104736	8.9057435		"44°24'36"""	"8°54'16"""		GENOVA	GENOVA	Via di Francia 	A fine rampa sottopasso direz.levante. Lato sinistro
+5	P.zza Bandiera		44.4142749	8.9286671		"44°24'51"""	"8°55'42"""		GENOVA	GENOVA	P.zza Bandiera	Lato Ponente (Via Bellucci)
+6	Via Duca D'Aosta 		44.404704	8.9479208		"44°24'16"""	"8°56'51"""		GENOVA	GENOVA	Via Duca D'Aosta 	Davanti Star Hotel
+7	Staz.Principe. Salita Provvidenza		44.417745	8.9221933		"44°25'04"""	"8°55'19"""		GENOVA	GENOVA	Salita Provvidenza	Davanti civici 7-9r
+8	Via Turati-Piazza Cavour		44.4070375	8.9280977		"44°24'25"""	"8°55'41"""		GENOVA	GENOVA	Via Turati	Fronte Vico Mattoni Rossi. A fine portici Via Turati
+9	Piazza Sarzano		44.4041504	8.9307999		"44°24'14"""	"8°55'51"""		GENOVA	GENOVA	Piazza Sarzano	Altezza civ.19. Angolo Stradone S.Agostino
+10	P.zza  Villa		44.4144117	8.9339644		"44°24'51"""	"8°56'01"""		GENOVA	GENOVA	P.zza  Villa	Strada tra i giardini (continuaz. Salita S.Gerolamo)
+11	Corso Paganini 		44.4158887	8.9356756		"44°24'57"""	"8°56'06"""		GENOVA	GENOVA	Corso Paganini 	Altezza Civ.21
+12	C.so Armellini  		44.4140087	8.9459449		"44°24'50"""	"8°56'46"""		GENOVA	GENOVA	C.so Armellini  	Altezza civ.2 di P.zza Manin (ascensore)
+13	V.le Brigate Partigiane 		44.3987657	8.9452471		"44°23'55"""	"8°56'42"""		GENOVA	GENOVA	V.le Brigate Partigiane 	Interno aiuola. Davanti ACI. 
+14	P.zza Matteotti		44.4068256	8.9325911		"44°24'25"""	"8°55'56"""		GENOVA	GENOVA	P.zza Matteotti	Altezza 29-31 rosso (attuale merci). Angolo Pollaiuoli
+15	Via Corsica		44.4015337	8.9378226		"44°24'04"""	"8°56'14"""		GENOVA	GENOVA	Via Corsica	Altezza Civ.6. Da fermata Bus a campane racc. differenziata
+16	Via SS Giacomo e Filippo		44.4098486	8.9404825		"44°24'35"""	"8°56'25"""		GENOVA	GENOVA	Via SS Giacomo e Filippo	Davanti a sede IRIDE
+17	Genova Campi		44.4225881	8.8839244		"44°25'21"""	"8°53'02"""		GENOVA	GENOVA	Genova Campi	Parcheggio Ikea
+18	CorsO Europa - Cavalcavia Don Bosco		44.3951761	8.9933874		"44°23'42"""	"8°59'39"""		GENOVA	GENOVA	CorsO Europa	Via Carrara. Sul cavalcavia
+19	S.Martino - Via Mosso		44.4080103	8.9748909		"44°24'30"""	"8°58'35"""		GENOVA	GENOVA	Via Mosso	Ingresso Monoblocco S.Martino
+20	Fiumara - Via Mantovani		44.4140409	8.8817755		"44°24'50"""	"8°52'54"""		GENOVA	GENOVA	Via Mantovani	Davanti all'Ansaldo
+21	Corso Sardegna		44.4113712	8.9551059		"44°24'41"""	"8°57'19"""		GENOVA	GENOVA	Corso Sardegna	Davanti Chiesa Santa Fede
+22	S.Fruttuoso - P.zza Terralba		44.4070278	8.9609293		"44°24'25"""	"8°57'38"""		GENOVA	GENOVA	P.zza Terralba	Di fronte al Terralba Park
+23	S.Fruttuoso - P.zza Solari		44.4126817	8.9587882		"44°24'45"""	"8°57'31"""		GENOVA	GENOVA	P.zza Solari	Fianco salita Bosco Pelato
+24	Piazza Carloforte*		44.4135999	8.9541073		"44°24'50"""	"8°57'14"""		GENOVA	GENOVA	Piazza Carloforte	Davanti a sportelli ACI
+25	Staglieno - Via Bobbio		44.4224508	8.9470413		"44°25'19"""	"8°56'47"""		GENOVA	GENOVA	Via Bobbio	Fronte ingresso sede AMT
+26	Via Ceccardi		44.4058489	8.9361435		"44°24'21"""	"8°56'08"""		GENOVA	GENOVA	Via Ceccardi	Angolo Via Carducci
+27	Principe - Metro		44.4161136	8.9191134		"44°24'57"""	"8°55'09"""		GENOVA	GENOVA	Principe - Metro	Via Fanti d'Italia - Stazione Metro
+28	Corso Marconi - Foce		44.3952903	8.9486807		"44°23'43"""	"8°56'55"""		GENOVA	GENOVA	Corso Marconi 	Angolo Via Casaregis - Direzione ponente
+29	Piazza Paolo da Novi		44.4023309	8.9498025		"44°24'08"""	"8°56'59"""		GENOVA	GENOVA	Piazza Paolo da NovI	Prosecuzione Via della Libertà -10 metri Direzione B.Aires
+30	Via Macaggi		44.4022033	8.942403		"44°24'07"""	"8°56'33"""		GENOVA	GENOVA	Via Macaggi	In fondo a Via Macaggi-Incrocio Brigata Liguria-lato sinistro
+31	S.Nicola		44.4206398	8.9301819		"44°25'14"""	"8°55'48"""		GENOVA	GENOVA	S.Nicola	Giardini Pellizzari - Corso Firenze
+32	Largo S.Francesco da Paola		44.4189539	8.914958		"44°25'08"""	"8°54'53"""		GENOVA	GENOVA	Largo S.Francesco da Paola	Fronte Banca di  Roma - Direzione levante
+33	Via Isonzo - Piazza Ragazzi del  99		44.4001412	8.9814352		"44°23'60"""	"8°58'53"""		GENOVA	GENOVA	Piazza Ragazzi del  99	Piazza Ragazzi del 99 - Lato opposto Mercato-Lato civico 3
+34	Nervi - Via Oberdan (Via Palach)		44.3842596	9.0313714		"44°23'03"""	"9°01'53"""		GENOVA	GENOVA	Nervi - Via Oberdan (Via Palach)	Alla fine della rampetta che scende da Corso Europa
+35	Pegli - Piazza Porticciolo		44.4246389	8.8121712		"44°25'28"""	"8°48'43"""		GENOVA	GENOVA	Pegli - Piazza Porticciolo	
+36	Pegli - Via Rizzo		44.427673	8.8109461		"44°25'39"""	"8°48'39"""		GENOVA	GENOVA	Pegli - Via Rizzo	Via Rizzo - Fronte farmacia Pescetto
+37	Piazza Leonardo da Vinci - Albaro		44.3978052	8.9644713		"44°23'51"""	"8°57'53"""		GENOVA	GENOVA	Piazza Leonardo da Vinci - Albaro	
+38	Piazza Massena - Cornigliano		44.4164687	8.8761026		"44°24'59"""	"8°52'33"""		GENOVA	GENOVA	Piazza Massena - Cornigliano	
+39	Piazza Merani - Albaro		44.3969746	8.9530725		"44°23'48"""	"8°57'11"""		GENOVA	GENOVA	Piazza Merani - Albaro	
+40	Piazza Tommaseo 		44.4017353	8.954418		"44°24'06"""	"8°57'14"""		GENOVA	GENOVA	Piazza Tommaseo 	ang. via Pozzo
+41	Piazza del Ferro - Garibaldi		44.4104548	8.9336963		"44°24'37"""	"8°56'01"""		GENOVA	GENOVA	Piazza del Ferro - Garibaldi	
+42	Piazzale Bligny - Molassana		44.4397676	8.9644824		"44°26'23"""	"8°57'52"""		GENOVA	GENOVA	Piazzale Bligny - Molassana	
+43	Quarto - Via 5 Maggio (monumento)		44.3879795	8.9948634		"44°23'16"""	"8°59'41"""		GENOVA	GENOVA	Quarto - Via 5 Maggio (monumento)	Via 5 Maggio (vicino monumento)
+44	Quarto - park interno ASL3		44.3975411	8.9882766		"44°23'51"""	"8°59'17"""		GENOVA	GENOVA	Quarto - park interno ASL3	Via G. Maggio (park interno ASL)
+45	Quinto - Via Gianelli		44.3842864	9.0197233		"44°23'03"""	"9°01'11"""		GENOVA	GENOVA	Quinto - Via Gianelli	
+46	Sestri Ponente - Largo Coppi		44.4243081	8.8493034		"44°25'28"""	"8°50'57"""		GENOVA	GENOVA	Sestri Ponente - Largo Coppi	
+47	Sestri Ponente - Via Hermada		44.4235829	8.8534421		"44°25'24"""	"8°51'11"""		GENOVA	GENOVA	Sestri Ponente - Via Hermada	Via Hermada angolo Via Giotto
+48	Sturla - Via 5 Maggio		44.3919462	8.9861856		"44°23'32"""	"8°59'07"""		GENOVA	GENOVA	Sturla - Via 5 Maggio	Sturla - Di fronte piscina sportiva sturla
+49	Via Canepari - Certosa		44.4339965	8.892856		"44°26'01"""	"8°53'33"""		GENOVA	GENOVA	Via Canepari - Certosa	Via Canepari ang Via Jori
+50	Via Cantore - Sampierdarena		44.4113091	8.8958245		"44°24'41"""	"8°53'44"""		GENOVA	GENOVA	Via Cantore - Sampierdarena	Via Cantore - altezza Villa Scassi
+51	Via Cavallotti - Boccadasse		44.3902757	8.9740199		"44°23'24"""	"8°58'26"""		GENOVA	GENOVA	Via Cavallotti - Boccadasse	Via Cavallotti
+52	Via Fillak - Rivarolo		44.4222134	8.8887365		"44°25'20"""	"8°53'19"""		GENOVA	GENOVA	Via Fillak - Rivarolo	
+53	Via Fillak / Brin - Certosa		44.4284793	8.8932941		"44°25'42"""	"8°53'35"""		GENOVA	GENOVA	Via Fillak / Brin - Certosa	
+54	Via Molteni - Sampierdarena		44.4125721	8.8868834		"44°24'46"""	"8°53'13"""		GENOVA	GENOVA	Via Molteni - Sampierdarena	
+55	Via Napoli		44.4225882	8.9200411		"44°25'21"""	"8°55'12"""		GENOVA	GENOVA	Via Napoli	
+56	Via Petrarca / Piazza Matteotti		44.4066255	8.9341639		"44°24'25"""	"8°55'56"""		GENOVA	GENOVA	Via Petrarca / Piazza Matteotti	Via Petrarca ang p.zza De Ferrari
+57	Via Piacenza Gavette		44.4341646	8.96064		"44°26'04"""	"8°57'37"""		GENOVA	GENOVA	Via Piacenza Gavette	
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+1												
+2												
