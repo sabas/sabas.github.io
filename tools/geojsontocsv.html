@@ -26,21 +26,27 @@ function geo2csv(json)
     
     if (first==true){
         //header
-    tempcsv+='"lon","lat",';
+    tempcsv+='"lon","lat"';
     $.each(prop,function(k,v){
-        tempcsv+='"'+k+'"';
+        tempcsv+=',"'+k+'"';
         });
     tempcsv+="\n";
     first=false;
     return;
     }
-    tempcsv+=geo[0]+','+geo[1]+',';
+    tempcsv+=geo[0]+','+geo[1];
         $.each(prop,function(k,v){
-        tempcsv+='"'+v+'"';
+        tempcsv+=',"'+v+'"';
         });
     tempcsv+="\n";
 });
 	return tempcsv;
+}
+
+function nl2br(str, is_xhtml) {
+  //http://phpjs.org/functions/nl2br/
+  var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>'; // Adjust comment to avoid issue on phpjs.org display
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 }
 
 function jsload()
@@ -53,7 +59,7 @@ function jsload()
         { 
 		    var obj=JSON.parse(e.target.result);
 			var l=geo2csv(obj); 
-			$('#map').html(l);
+			$('#map').html(nl2br(l,true));
         }
             
 		r.readAsText(f);
@@ -63,7 +69,7 @@ function jsload()
 
 function jssave()
 {
-var txt= $("#map").html();
+var txt= tempcsv;//$("#map").html();
 if(txt=="")return;
 var blob = new Blob([txt], {type: "text/javascript;charset=utf-8"});
 saveAs(blob, "map.csv");
