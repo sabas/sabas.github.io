@@ -2,16 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>Genoa Port Statistics - 2012 Traffic</title>
+<title>GeoJson to csv</title>
 <link rel="stylesheet" href="../vendor/css/normalize.css" type="text/css"/>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../vendor/js/FileSaver.js"></script>
-<script type="text/javascript">
-//https://code.google.com/p/microajax/
-function microAjax(B,A){this.bindFunction=function(E,D){return function(){return E.apply(D,[D])}};this.stateChange=function(D){if(this.request.readyState==4){this.callbackFunction(this.request.responseText)}};this.getRequest=function(){if(window.ActiveXObject){return new ActiveXObject("Microsoft.XMLHTTP")}else{if(window.XMLHttpRequest){return new XMLHttpRequest()}}return false};this.postBody=(arguments[2]||"");this.callbackFunction=A;this.url=B;this.request=this.getRequest();if(this.request){var C=this.request;C.onreadystatechange=this.bindFunction(this.stateChange,this);if(this.postBody!==""){C.open("POST",B,true);C.setRequestHeader("X-Requested-With","XMLHttpRequest"); C.setRequestHeader("Content-type","application/x-www-form-urlencoded");C.setRequestHeader("Connection","close")}else{C.open("GET",B,true)}C.send(this.postBody)}};
-</script>
 </head>
 <body>
+<h1>GeoJson to csv</h1>
 <p>Genera un csv a partire da un geojson contenente punti, inserendo coordinate nelle prime due colonne e a seguire le proprietà.</p>
 <p>Nel box sotto viene visualizzato il risultato, con Salva viene scaricato il file.</p>
 
@@ -20,6 +17,12 @@ var tempkeys=[];
 var temparray=[];
 
 var tempcsv='';
+
+/*
+ * Funzione principale
+ * crea un array di chiavi ed un array con tutte le righe
+ * poi lo trasforma in stringa
+ */
 function geo2csv(json)
 {
     var first=true;
@@ -43,27 +46,29 @@ function geo2csv(json)
         temparray.push(temprow);
     });
     
-tempcsv='"'+tempkeys.join('","')+'"\n';
-$.each(temparray,function(k,v){
-tempr=''; 
-for (var tk=0;tk<tempkeys.length;tk++){
-if (tempkeys[tk] in v) {
-if(tk>0)tempr+=',';
-tempr+='"'+v[tempkeys[tk]]+'"';
-}
-else tempr+=',';
-}
-tempcsv+=tempr+"\n";
-});
+    tempcsv='"'+tempkeys.join('","')+'"\n';
+    $.each(temparray,function(k,v){
+    tempr=''; 
+    for (var tk=0;tk<tempkeys.length;tk++){
+    if (tempkeys[tk] in v) {
+    if(tk>0)tempr+=',';
+    tempr+='"'+v[tempkeys[tk]]+'"';
+    }
+    else tempr+=',';
+    }
+    tempcsv+=tempr+"\n";
+    });
 	return tempcsv;
 }
 
+//converte gli accapi nel tag html
 function nl2br(str, is_xhtml) {
   //http://phpjs.org/functions/nl2br/
   var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>'; // Adjust comment to avoid issue on phpjs.org display
   return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 }
 
+//carica il file
 function jsload()
 {
     var f= document.getElementById("files").files[0];
@@ -82,19 +87,20 @@ function jsload()
     else { alert ( "Failed to load file" ); }
 }
 
+//salva il testo in un file e lo scarica
 function jssave()
 {
-var txt= tempcsv;//$("#map").html();
+var txt= tempcsv;
 if(txt=="")return;
 var blob = new Blob([txt], {type: "text/javascript;charset=utf-8"});
 saveAs(blob, "map.csv");
 }
-
 </script>
-
+<form>
 <input type="file" id="files" name="files" />
 <input type="button" onclick="jsload()" value="Carica"/>
 <input type="button" name="save" id="save" value="Salva" onclick="jssave()"/>
-<div id="map" style="height:500px;width:100%; overflow:scroll;"></div>
+</form>
+<div id="map" style="margin-top:20px;height:400px;width:100%; overflow:auto;"></div>
 </body>
 </html>
