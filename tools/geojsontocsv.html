@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8"/>
 <title>Genoa Port Statistics - 2012 Traffic</title>
 <link rel="stylesheet" href="../vendor/css/normalize.css" type="text/css"/>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -15,31 +16,46 @@ function microAjax(B,A){this.bindFunction=function(E,D){return function(){return
 <p>Nel box sotto viene visualizzato il risultato, con Salva viene scaricato il file.</p>
 
 <script>
-    
+var tempkeys=[];
+var temparray=[];
+
 var tempcsv='';
 function geo2csv(json)
 {
     var first=true;
+    tempkeys.push("lon");
+    tempkeys.push("lat");
+    
 	$.each(json.features,function(i,v){
 	var geo=v.geometry.coordinates;
     var prop=v.properties;
     
-    if (first==true){
-        //header
-    tempcsv+='"lon","lat"';
-    $.each(prop,function(k,v){
-        tempcsv+=',"'+k+'"';
-        });
-    tempcsv+="\n";
-    first=false;
-    return;
-    }
-    tempcsv+=geo[0]+','+geo[1];
+    var temprow={};
+    temprow["lon"]=geo[0];
+    temprow["lat"]=geo[1];
+
         $.each(prop,function(k,v){
-        tempcsv+=',"'+v+'"';
+        if (tempkeys.indexOf(k) == -1) {
+           tempkeys.push(k);
+        } 
+        temprow[k]=v;
         });
-    tempcsv+="\n";
+        temparray.push(temprow);
+    });
+    
+tempcsv='"'+tempkeys.join('","')+'"\n';
+$.each(temparray,function(k,v){
+tempr=''; 
+for (var tk=0;tk<tempkeys.length;tk++){
+if (tempkeys[tk] in v) {
+if(tk>0)tempr+=',';
+tempr+='"'+v[tempkeys[tk]]+'"';
+}
+else tempr+=',';
+}
+tempcsv+=tempr+"\n";
 });
+console.log(tempcsv);
 	return tempcsv;
 }
 
