@@ -9,8 +9,8 @@
 </head>
 <body>
 <h1>GeoJson to csv</h1>
-<p>Genera un csv a partire da un geojson contenente punti, inserendo coordinate nelle prime due colonne e a seguire le proprietà.</p>
-<p>Nel box sotto viene visualizzato il risultato, con Salva viene scaricato il file.</p>
+<p>Generate a csv from a geojson file with points: first two columns get the coordinates, then a key per column.</p>
+<p>In the box you'll find the result, with Save you download the file.</p>
 
 <script>
 var tempkeys=[];
@@ -98,8 +98,8 @@ saveAs(blob, "map.csv");
 </script>
 <form>
 <input type="file" id="files" name="files" />
-<input type="button" onclick="jsload()" value="Carica"/>
-<input type="button" name="save" id="save" value="Salva" onclick="jssave()"/>
+<input type="button" onclick="jsload()" value="Execute"/>
+<input type="button" name="save" id="save" value="Save" onclick="jssave()"/>
 </form>
 <div id="map" style="margin-top:20px;height:400px;width:100%; overflow:auto;"></div>
 </body>
