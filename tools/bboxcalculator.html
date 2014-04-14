@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>BBOX CALCULATOR</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+<style>*{font-family:monospace;}</style>
+</head>
+<body>
+<div id="map" style="width:70%;height:600px;float:left; margin:10px;"></div>
+<h1>BBOX CALCULATOR</h1>
+BBOX <input type="text" id="bbox" style="width:330px"/>
+<br/>
+SIZE <input type="text" id="aspect" style="width:330px"/>
+<script>
+//var bbox="8.910084,44.399142,8.944588,44.417781";
+function calcbbox(pippo){
+	var bbarr=bbox.split(",");
+
+	var max_width=1280;
+	var max_height=720;
+	//a 44°
+	var lat_metri=111112.21066641241;
+	var lon_metri=80206.16339921234;
+
+	var dw=(bbarr[2]-bbarr[0])*lon_metri;
+	var dh=(bbarr[3]-bbarr[1])*lat_metri;
+
+	//calcolo aspect ratio
+	var aspect=dw/dh;
+	var stdaspect=max_width/max_height;
+
+	if(aspect>stdaspect){
+	document.getElementById("aspect").value=max_width+" "+(max_width/dw*dh).toFixed(0);
+	}
+	else{
+	document.getElementById("aspect").value=(max_height/dh*dw).toFixed(0)+" "+max_height;
+	}
+}
+
+
+
+// create a map in the "map" div, set the view to a given place and zoom
+var map = L.map('map').setView([44, 9], 7);
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+		var drawControl = new L.Control.Draw({
+			draw: {
+				position: 'topleft',
+				polygon: false,
+				polyline: false,
+				circle: false,
+				marker: false
+			},
+			edit: {
+        featureGroup: drawnItems
+    }
+		});
+		map.addControl(drawControl);
+		
+ function createdraw(e) {
+        handledraw(e.layer);
+} 
+
+function editdraw(e) {
+    var layers = e.layers;
+    layers.eachLayer(function (layer) {
+        handledraw(layer);
+    });
+}
+		
+		function handledraw(layer) {
+			var pointarr=layer.getLatLngs();
+			
+			var minlat=-90;
+			var maxlat=90;
+			var minlon=-180;
+			var maxlon=180;
+			
+			for(var i in pointarr)
+			{
+			var p=pointarr[i];
+			if(p.lat>minlat)minlat=p.lat;
+			if(p.lat<maxlat)maxlat=p.lat;
+			if(p.lng>minlon)minlon=p.lng;
+			if(p.lng<maxlon)maxlon=p.lng;			
+			}
+			
+			var bbstring=minlon.toFixed(6)+","+minlat.toFixed(6)+","+maxlon.toFixed(6)+","+maxlat.toFixed(6);
+			document.getElementById("bbox").value=bbstring;
+			
+			drawnItems.addLayer(layer);
+			
+			/* calcolo bbox */
+			var bbarr=bbstring.split(",");
+
+			var max_width=1280;
+			var max_height=720;
+			//a 44°
+			var lat_metri=111112.21066641241;
+			var lon_metri=80206.16339921234;
+
+			var dw=(bbarr[2]-bbarr[0])*lon_metri;
+			var dh=(bbarr[3]-bbarr[1])*lat_metri;
+
+			//calcolo aspect ratio
+			var aspect=dw/dh;
+			var stdaspect=max_width/max_height;
+
+			if(aspect>stdaspect){
+			document.getElementById("aspect").value=max_width+"x"+(max_width/dw*dh).toFixed(0);
+			}
+			else{
+			document.getElementById("aspect").value=(max_height/dh*dw).toFixed(0)+"x"+max_height;
+			}
+			/* fine calcolo */
+		}
+
+		map.on('draw:created', createdraw);
+		
+		map.on('draw:edited', editdraw);
+		
+</script>
+</body>
+</html>
