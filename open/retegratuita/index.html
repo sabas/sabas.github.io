@@ -14,7 +14,6 @@
      <link rel="shortcut icon" href="../../media/favicon.ico">
                                    
 <script type="text/javascript">
-/*
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-13244504-2']);
   _gaq.push(['_setDomainName', 'stefanosabatini.eu']);
@@ -25,7 +24,6 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-*/
 </script>
 
 <style>
@@ -65,19 +63,19 @@ height: 140px;
        <div class="row">
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-<script src="../../media/map.js"></script>
+<script src="../../script/map.js"></script>
 
 <div id="map" style="width:50%;height:300px; margin-right:10px; float:left;"></div>
 
 <h1>Open Rete Gratuita</h1>
-
+<p>Data released by the network operator and added to OpenStreetMap during October 2012.</p>
 <script type="text/javascript">
 //https://code.google.com/p/microajax/
 function microAjax(B,A){this.bindFunction=function(E,D){return function(){return E.apply(D,[D])}};this.stateChange=function(D){if(this.request.readyState==4){this.callbackFunction(this.request.responseText)}};this.getRequest=function(){if(window.ActiveXObject){return new ActiveXObject("Microsoft.XMLHTTP")}else{if(window.XMLHttpRequest){return new XMLHttpRequest()}}return false};this.postBody=(arguments[2]||"");this.callbackFunction=A;this.url=B;this.request=this.getRequest();if(this.request){var C=this.request;C.onreadystatechange=this.bindFunction(this.stateChange,this);if(this.postBody!==""){C.open("POST",B,true);C.setRequestHeader("X-Requested-With","XMLHttpRequest"); C.setRequestHeader("Content-type","application/x-www-form-urlencoded");C.setRequestHeader("Connection","close")}else{C.open("GET",B,true)}C.send(this.postBody)}};
 </script>
 
 <script>
-var map = initMap(44.406,8.791, 10);
+var map = initmap(44.406,8.791, 10);
 
 
 	function loadLayer(url)
@@ -104,7 +102,7 @@ loadLayer(feat);
       
       <footer>
         <p class="pull-right"><a onclick="$(this).click(function() {$('html,body').animate({scrollTop:0},800);});">Back to top</a></p>
-        <p>&copy; 2013 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
+        <p>&copy; 2014 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
       </footer>
     </div>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
