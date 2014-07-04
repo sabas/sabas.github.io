@@ -1,18 +1,84 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="utf-8"/>
 <title>BBOX CALCULATOR</title>
+<link rel="stylesheet" href="../script/normalize.css" />
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
-<style>*{font-family:monospace;}</style>
+
+	<link href="../vendor/css/bootstrap.min.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-13244504-2']);
+_gaq.push(['_setDomainName', 'stefanosabatini.eu']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+
+<style>.row{font-family:monospace;}
+.navbar-inverse .navbar-nav li a {
+line-height: 60px;
+}
+.img140 {
+height: 140px;
+}
+.center{text-align:center;}
+.row{padding:15px;}
+
+#map{position:absolute;width:90%;min-height:400px;height:100%;max-height:600px;float:left;}
+</style>
 </head>
 <body>
-<div id="map" style="width:70%;height:600px;float:left; margin:10px;"></div>
-<h1>BBOX CALCULATOR</h1>
-BBOX <input type="text" id="bbox" style="width:330px"/>
-<br/>
-SIZE <input type="text" id="aspect" style="width:330px"/>
+
+<body>
+	<div class="container">
+
+	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar brand" href="../index.html"><img src="../media/logo.png" style="height:60px;"/></a>
+		</div>
+		<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="../projects.html">Projects</a></li>
+		<li><a href="../about.html">About me</a></li>
+		</ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-4">
+
+			<h1>BBOX CALCULATOR</h1>
+			<p>Activate the tool (third button on map), then click and drag to draw a bounding box</p>
+			BBOX <input type="text" id="bbox" style="width:330px"/>
+			<br/>
+			SIZE <input type="text" id="aspect" style="width:330px"/>
+
+			</div>
+		<div class="col-lg-8">
+			<div id="map" style=""></div>
+			</div>
+	</div>
+</div>
+
 <script>
 //var bbox="8.910084,44.399142,8.944588,44.417781";
 function calcbbox(pippo){
@@ -65,10 +131,10 @@ var drawnItems = new L.FeatureGroup();
     }
 		});
 		map.addControl(drawControl);
-		
+
  function createdraw(e) {
         handledraw(e.layer);
-} 
+}
 
 function editdraw(e) {
     var layers = e.layers;
@@ -76,29 +142,29 @@ function editdraw(e) {
         handledraw(layer);
     });
 }
-		
+
 		function handledraw(layer) {
 			var pointarr=layer.getLatLngs();
-			
+
 			var minlat=-90;
 			var maxlat=90;
 			var minlon=-180;
 			var maxlon=180;
-			
+
 			for(var i in pointarr)
 			{
 			var p=pointarr[i];
 			if(p.lat>minlat)minlat=p.lat;
 			if(p.lat<maxlat)maxlat=p.lat;
 			if(p.lng>minlon)minlon=p.lng;
-			if(p.lng<maxlon)maxlon=p.lng;			
+			if(p.lng<maxlon)maxlon=p.lng;
 			}
-			
+
 			var bbstring=minlon.toFixed(6)+","+minlat.toFixed(6)+","+maxlon.toFixed(6)+","+maxlat.toFixed(6);
 			document.getElementById("bbox").value=bbstring;
-			
+
 			drawnItems.addLayer(layer);
-			
+
 			/* calcolo bbox */
 			var bbarr=bbstring.split(",");
 
@@ -125,9 +191,9 @@ function editdraw(e) {
 		}
 
 		map.on('draw:created', createdraw);
-		
+
 		map.on('draw:edited', editdraw);
-		
+
 </script>
 </body>
 </html>
