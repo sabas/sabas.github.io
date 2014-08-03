@@ -1,93 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Stefano Sabatini Homepage</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Stefano Sabatini">
-     <link rel="shortcut icon" href="media/favicon.ico">
-
-    <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
-                                   
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-13244504-2']);
-  _gaq.push(['_setDomainName', 'stefanosabatini.eu']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-<style>
-.navbar-inverse .navbar-nav li a {
-line-height: 60px;
-}
-.img140 {
-height: 140px;
-}
-.center{text-align:center;}
-.row{padding:15px;}
-</style>
-  </head>
-
-  <body>
-    <div class="container">
-
-      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar brand" href="index.html"><img src="media/logo.png" style="height:60px;"/></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-           <li><a href="index.html">Home</a></li>
-           <li><a href="projects.html">Projects</a></li>
-           <li><a href="about.html">About me</a></li>
-          </ul>
-        </div>
-      </div>
-
+---
+title: About me
+layout: default
+---
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
       <div class="row">
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-<script src="script/map.js"></script>
+        <div class="col-lg-12">
 <div id="map" style="float:right; width:50%; height:50%; min-height:300px;"></div>
 
 <script>
-var map=initmap(44.4005,8.9523,13);
+var map = L.map('map').setView([44.4005,8.9523], 13);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 </script>
 
-   <h2>Who am I?</h2>
+<h2>Who am I?</h2>
 
 <p>My name is Stefano Sabatini, I was born in 1988 in Genoa, where I live and work.</p>
  
 <h2>Curriculum</h2>
 
-<p>My Europass curriculum can be seen via <a href="europass.pdf">this link</a>, my Linkedin profile is <a href="http://it.linkedin.com/in/stefanosabatini/">this way</a>.</p>
+<p>My Europass curriculum can be seen via <a href="docs/europass.pdf">this link</a>, my Linkedin profile is <a href="http://it.linkedin.com/in/stefanosabatini/">this way</a>.</p>
 
 <p>I am employed as BPS at <a href="http://www.coscon.it/">Coscon Italy SRL</a>.<p>
-	
-      </div>
-      
-      <footer>
-        <p class="pull-right"><a onclick="$(this).click(function() {$('html,body').animate({scrollTop:0},800);});">Back to top</a></p>
-        <p>&copy; 2014 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
-      </footer>
-    </div>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="vendor/js/bootstrap.min.js"></script>	  
-  </body>
-</html>
+</div>
+</div>
