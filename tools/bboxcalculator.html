@@ -15,9 +15,17 @@ layout: default
 		<div class="col-lg-4">
 			<h1>BBOX CALCULATOR</h1>
 			<p>Activate the tool (third button on map), then click and drag to draw a bounding box</p>
+
+			SIZE (max 1280x720) <input type="text" id="aspect" style="width:330px"/>
+			<br/>
 			BBOX <input type="text" id="bbox" style="width:330px"/>
 			<br/>
-			SIZE <input type="text" id="aspect" style="width:330px"/>
+			BBOX INVERTED <input type="text" id="bboxinv" style="width:330px"/>
+			<br/>
+			JS BBOX <input type="text" id="jsbbox" style="width:330px"/>
+			<br/>
+			JS BBOX INVERTED <input type="text" id="jsbboxinv" style="width:330px"/>
+			<br/>
 		</div>
 		<div class="col-lg-8">
 			<div id="map" style=""></div>
@@ -25,7 +33,7 @@ layout: default
 	</div>
 
 <script>
-function calcbbox(pippo){
+function calcbbox(bbox){
 	var bbarr=bbox.split(",");
 
 	var max_width=1280;
@@ -102,6 +110,12 @@ function editdraw(e) {
 
 			var bbstring=minlon.toFixed(6)+","+minlat.toFixed(6)+","+maxlon.toFixed(6)+","+maxlat.toFixed(6);
 			document.getElementById("bbox").value=bbstring;
+			var bbinvstring=minlat.toFixed(6)+","+minlon.toFixed(6)+","+maxlat.toFixed(6)+","+maxlon.toFixed(6);
+			document.getElementById("bboxinv").value=bbinvstring;
+			var jsbbstring="[["+minlon.toFixed(6)+","+minlat.toFixed(6)+"],["+maxlon.toFixed(6)+","+maxlat.toFixed(6)+"]]";
+			document.getElementById("jsbbox").value=jsbbstring;
+			var jsbbinvstring="[["+minlat.toFixed(6)+","+minlon.toFixed(6)+"],["+maxlat.toFixed(6)+","+maxlon.toFixed(6)+"]]";
+			document.getElementById("jsbboxinv").value=jsbbinvstring;
 
 			drawnItems.addLayer(layer);
 
