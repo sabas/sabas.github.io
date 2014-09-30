@@ -6,6 +6,7 @@ layout: default
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+<script src='sexagesimal.js'></script>
 
 <style>.row{font-family:monospace;}
 .row{height:450px;}
@@ -22,6 +23,8 @@ layout: default
 			<br/>
 			LON <input type="text" id="lon" style="width:330px"/>
 			<br/>
+			DMS <input type="text" id="dms" style="width:330px"/>	
+			<br/>
 		</div>
 		<div class="col-lg-8">
 			<div id="map" style=""></div>
@@ -36,6 +39,7 @@ function writeCoord(e){
 	document.getElementById('lon').value=ll.lng.toFixed(6);
 	document.getElementById('coords').value=ll.lat.toFixed(6)+','+ll.lng.toFixed(6);
 	document.getElementById('coords').select();
+	document.getElementById('dms').value=sexagesimal.formatPair({ lat: ll.lat, lon: ll.lng });
 }
 
 var map = L.map('map').setView([44, 9], 7);
