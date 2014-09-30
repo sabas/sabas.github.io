@@ -35,13 +35,24 @@ function writeCoord(e){
 	document.getElementById('lat').value=ll.lat.toFixed(6);
 	document.getElementById('lon').value=ll.lng.toFixed(6);
 	document.getElementById('coords').value=ll.lat.toFixed(6)+','+ll.lng.toFixed(6);
+	document.getElementById('coords').select();
 }
 
 var map = L.map('map').setView([44, 9], 7);
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+var osmTile= L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+ var realVista = L.tileLayer.wms("http://213.215.135.196/reflector/open/service?", {
+		layers: 'rv1',
+		format: 'image/jpeg',attribution: 'RealVista1.0 WMS OPEN di <a href="http://www.realvista.it">e-GEOS SpA</a>'
+	});
+var layerControl = new L.Control.Layers({
+		'OSM': osmTile,
+		'Satellite': realVista 
+	}, null, {position: 'topright'});
+
+layerControl.addTo(map);
 
 	map.on('click', writeCoord);
 
