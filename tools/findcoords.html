@@ -7,6 +7,7 @@ layout: default
 <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
 <script src='{{site.baseurl}}/js/sexagesimal.js'></script>
+<script src='{{site.baseurl}}/js/openlocationcode.js'></script>
 
 <style>.row{font-family:monospace;}
 .row{height:450px;}
@@ -29,7 +30,9 @@ cursor: crosshair !important;
 			<br/>
 			LON <input type="text" id="lon" style="width:330px"/>
 			<br/>
-			DMS <input type="text" id="dms" style="width:330px"/>	
+			DMS <input type="text" id="dms" style="width:330px"/>
+			<br/>
+			OLC <input type="text" id="olc" style="width:330px"/>
 			<br/>
 		</div>
 		<div class="col-lg-8">
@@ -46,6 +49,7 @@ function writeCoord(e){
 	document.getElementById('coords').value=ll.lat.toFixed(6)+','+ll.lng.toFixed(6);
 	document.getElementById('coords').select();
 	document.getElementById('dms').value=sexagesimal.formatPair({ lat: ll.lat, lon: ll.lng });
+	document.getElementById('olc').value=OpenLocationCode.encode(ll.lat, ll.lng);
 }
 
 var map = L.map('map').setView([44, 9], 7);
