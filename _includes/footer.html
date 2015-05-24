@@ -3,7 +3,12 @@
         <p>&copy; 2014 Stefano Sabatini &middot; Images CC-BY Wikimedia Commons</p>
       </footer>
     </div> 
+<script src="/js/js.cookie-1.5.1.min.js"></script>
+<script src="/js/jquery.cookiecuttr.js"></script>
+<link rel="stylesheet" href="/css/cookiecuttr.css"/>
+
 <script type="text/javascript">
+if (jQuery.cookie('cc_cookie_accept') == "cc_cookie_accept") {
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-13244504-2']);
   _gaq.push(['_setDomainName', 'stefanosabatini.eu']);
@@ -14,6 +19,18 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+}
+
+$(document).ready(function () {
+    $.cookieCuttr({
+        cookieAnalytics:true,
+              cookieAnalyticsMessage: "This website uses cookies to track visitors via Google Analytics",
+              cookieAcceptButtonText: "I'm ok with this",
+              cookieWhatAreLinkText: "More information",
+              cookieWhatAreTheyLink: "http://cookiestatement.eu/",
+              cookieNotificationLocationBottom: true
+    });	
+});
 </script>
 </body>
 </html>
