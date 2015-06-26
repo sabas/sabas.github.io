@@ -94,19 +94,21 @@ function handledraw(layer) {
 			if(p.lng>minlon)minlon=p.lng;
 			if(p.lng<maxlon)maxlon=p.lng;
 			}
+            if(minlon>maxlon) { tmp=minlon; minlon = maxlon; maxlon=tmp;}
+            if(minlat>maxlat) { tmp=minlat; minlat = maxlat; maxlat=tmp;}
 
       var fixMinLon=minlon.toFixed(6);
       var fixMinLat=minlat.toFixed(6);
       var fixMaxLon=maxlon.toFixed(6);
       var fixMaxLat=maxlat.toFixed(6);
 
-			var bbstring=fixMinLon+","+fixMinLat+","+fixMaxLon+","+fixMaxLat;
+			var bbstring=fixMinLon+","+fixMaxLat+","+fixMaxLon+","+fixMinLat;
 			document.getElementById("bbox").value=bbstring;
-			var bbinvstring=fixMinLat+","+fixMinLon+","+fixMaxLat+","+fixMaxLon;
+			var bbinvstring=fixMaxLat+","+fixMinLon+","+fixMinLat+","+fixMaxLon;
 			document.getElementById("bboxinv").value=bbinvstring;
-			var jsbbstring="[["+fixMinLon+","+fixMinLat+"],["+fixMaxLon+","+fixMaxLat+"]]";
+			var jsbbstring="[["+fixMinLon+","+fixMaxLat+"],["+fixMaxLon+","+fixMinLat+"]]";
 			document.getElementById("jsbbox").value=jsbbstring;
-			var jsbbinvstring="[["+fixMinLat+","+fixMinLon+"],["+fixMaxLat+","+fixMaxLon+"]]";
+			var jsbbinvstring="[["+fixMaxLat+","+fixMinLon+"],["+fixMinLat+","+fixMaxLon+"]]";
 			document.getElementById("jsbboxinv").value=jsbbinvstring;
 
       var polybbox="[["+fixMinLon+","+fixMaxLat+"],["+fixMaxLon+","+fixMaxLat+"],["+fixMaxLon+","+fixMinLat+"],["+fixMinLon+","+fixMinLat+"]]";
