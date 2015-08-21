@@ -102,10 +102,12 @@ function handledraw(layer) {
       var fixMaxLon=maxlon.toFixed(6);
       var fixMaxLat=maxlat.toFixed(6);
 
-			var bbstring=fixMinLon+","+fixMaxLat+","+fixMaxLon+","+fixMinLat;
+            // http://wiki.openstreetmap.org/wiki/Bounding_Box
+			var bbstring=fixMinLon+","+fixMinLat+","+fixMaxLon+","+fixMaxLat;
 			document.getElementById("bbox").value=bbstring;
-			var bbinvstring=fixMaxLat+","+fixMinLon+","+fixMinLat+","+fixMaxLon;
+			var bbinvstring=fixMinLat+","+fixMinLon+","+fixMaxLat+","+fixMaxLon;
 			document.getElementById("bboxinv").value=bbinvstring;
+
 			var jsbbstring="[["+fixMinLon+","+fixMaxLat+"],["+fixMaxLon+","+fixMinLat+"]]";
 			document.getElementById("jsbbox").value=jsbbstring;
 			var jsbbinvstring="[["+fixMaxLat+","+fixMinLon+"],["+fixMinLat+","+fixMaxLon+"]]";
