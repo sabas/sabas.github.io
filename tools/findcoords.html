@@ -34,6 +34,8 @@ cursor: crosshair !important;
 			<br/>
 			OLC <input type="text" id="olc" style="width:330px"/>
 			<br/>
+			LOCODE <input type="text" id="locode" style="width:330px"/>
+			<br/>
 		</div>
 		<div class="col-lg-8">
 			<div id="map" style=""></div>
@@ -41,6 +43,34 @@ cursor: crosshair !important;
 	</div>
 
 <script>
+function pad (str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+}
+
+function locodeFormat(lat,lon){
+var dlat=coordToDMS(lat,'lat');
+var dlon=coordToDMS(lon,'lon');
+slat=pad(dlat.d.toString(),2)+pad(dlat.m.toString(),2)+dlat.dir;
+slon=pad(dlon.d.toString(),3)+pad(dlon.m.toString(),2)+dlon.dir;
+return slat+" "+slon;
+}
+
+function coordToDMS(x,dim){
+    var dirs = {
+            lat: ['N', 'S'],
+            lon: ['E', 'W']
+        }[dim] || '',
+        dir = dirs[x >= 0 ? 0 : 1],
+        abs = Math.abs(x),
+        whole = Math.floor(abs),
+        fraction = abs - whole,
+        fractionMinutes = fraction * 60,
+        minutes = Math.floor(fractionMinutes),
+        seconds = Math.floor((fractionMinutes - minutes) * 60);
+
+    return {'d':whole,'m': minutes, 's':seconds,'dir':dir};
+}
 
 function writeCoord(e){
 	var ll=e.latlng;
@@ -50,6 +80,7 @@ function writeCoord(e){
 	document.getElementById('coords').select();
 	document.getElementById('dms').value=sexagesimal.formatPair({ lat: ll.lat, lon: ll.lng });
 	document.getElementById('olc').value=OpenLocationCode.encode(ll.lat, ll.lng);
+	document.getElementById('locode').value=locodeFormat(ll.lat, ll.lng);
 }
 
 var map = L.map('map').setView([44, 9], 7);
@@ -63,7 +94,7 @@ var osmTile= L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	});
 var layerControl = new L.Control.Layers({
 		'OSM': osmTile,
-		'Satellite': realVista 
+		'Satellite': realVista
 	}, null, {position: 'topright'});
 
 layerControl.addTo(map);
