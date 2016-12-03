@@ -138,15 +138,23 @@ MapEditor.prototype.prepare = function() {
 MapEditor.prototype.getValue = function() {
  
     var tempgeo = drawnItems.toGeoJSON();
+    var results = '';
     tempgeo = tempgeo['features'];
     if (tempgeo.length > 1) {
-        console.log('only one plz');
+        tempcollection = [];
+        for (var i in tempgeo) {
+            tempcollection.push(tempgeo[i]['geometry']);
+        }
+        results = '{ "type": "GeometryCollection", "geometries": ' + JSON.stringify(tempcollection) + '}';
     }
     if (tempgeo.length == 0) {
         return false;
     }
-    tempgeo = tempgeo[0]['geometry'];
-    var results = JSON.stringify(tempgeo);
+    if (tempgeo.length == 1) {
+        tempgeo = tempgeo[0]['geometry'];
+        results = JSON.stringify(tempgeo);
+    }
+
     this.instance.updateSettings('outsideClickDeselects', true);
     this.instance.setDataAtCell(this.row, this.col, results); // otherwise doesn't set it a second time?
     return results;
@@ -264,7 +272,7 @@ function saveGeojson() {
     var txt = JSON.stringify(tempGeojson, function(key, val) {
         if (isNaN(+key)) return val;
         return val.toFixed ? Number(val.toFixed(significantDigits)) : val;
-    });
+    }, '    ');
     console.log(txt);
     var blob = new Blob([txt], {type: "application/vnd.geo+json;charset=utf-8"});
     saveAs(blob, fileName);
