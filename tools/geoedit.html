@@ -16,6 +16,9 @@ layout: default
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
 
+<link href='{{site.baseurl}}/css/leaflet-search.min.css' rel='stylesheet' />
+<script src='{{site.baseurl}}/js/leaflet-search.min.js'></script>
+
 <style>
 #map {width:100%; height:100%; min-height:400px;}
 </style>
@@ -27,7 +30,7 @@ layout: default
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Edit geometry</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="mapParent">
         <div id="map"></div>
       </div>
       <div class="modal-footer">
@@ -99,7 +102,9 @@ var pointTransform = function (feature, latlng) {
 var MapEditor = Handsontable.editors.BaseEditor.prototype.extend();
 
 MapEditor.prototype.init = function() {
-
+    if(map != undefined || map != null){
+        return;
+    }
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib });
@@ -110,6 +115,7 @@ MapEditor.prototype.init = function() {
         'osm': osm.addTo(map)
     }, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: true }).addTo(map);
     map.addControl(new L.Control.Draw({
+        position: 'topright',
         edit: {
             featureGroup: drawnItems,
             poly: {
@@ -129,6 +135,18 @@ MapEditor.prototype.init = function() {
 
         drawnItems.addLayer(layer);
     });
+    
+    map.addControl( new L.Control.Search({
+		url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat','lon'],
+		circleLocation: true,
+		autoType: false,
+		autoCollapse: true,
+		minLength: 3,
+		zoom:15
+	}) );
 };
 
 MapEditor.prototype.prepare = function() {
@@ -148,7 +166,7 @@ MapEditor.prototype.getValue = function() {
         results = '{ "type": "GeometryCollection", "geometries": ' + JSON.stringify(tempcollection) + '}';
     }
     if (tempgeo.length == 0) {
-        return false;
+        return '';
     }
     if (tempgeo.length == 1) {
         tempgeo = tempgeo[0]['geometry'];
@@ -235,9 +253,15 @@ function loadGeojsonInTable(json) {
     width: '100%',
     autoWrapRow: true,
     height: 300,
-    maxRows: 22,
     rowHeaders: true,
     colHeaders: tempkeys,
+    columnSorting: true,
+    sortIndicator: true,
+    autoColumnSize: {
+        samplingRatio: 23
+    },
+    manualRowMove: true,
+    manualColumnMove: true,
     contextMenu: true
 };
 
