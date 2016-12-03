@@ -9,6 +9,35 @@ layout: default
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.29.0/handsontable.full.min.js"></script>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
+<style>
+#map {width:100%; height:100%; min-height:400px;}
+</style>
+
+<div class="modal fade" id="mapModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit geometry</h4>
+      </div>
+      <div class="modal-body">
+        <div id="map"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="hot.getActiveEditor().getValue()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="container">
 <div class="row">
 	<h1>GeoJSON editor</h1>
@@ -29,9 +58,10 @@ layout: default
 </div>
 <div class="row">
 <div class="form-inline">
-<input type="text" id="fileName" value="" class="form-control"/>
-<input type="checkbox" id="completeKeys" checked/> Persist empty cells
-<button onclick='saveGeojson();' class="btn btn-primary">Save</button>
+<label for="fileName" class="col-md-4">File Name <input type="text" id="fileName" value="" class="form-control"/></label>
+<label for="significantDigits" class="col-md-4">Significant Digits <input type="text" id="significantDigits" value="6" class="form-control"/></label>
+<label for="completeKeys" class="col-md-2"><input type="checkbox" id="completeKeys" checked/> Persist empty cells</label>
+<button onclick='saveGeojson();' class="btn btn-primary col-md-2">Save</button>
 </div>
 </div>
 </div>
@@ -39,7 +69,6 @@ layout: default
   function handleFileSelect(evt) {
     var files = evt.target.files;
     
-    console.log(files[0]);
     $('#fileName').val(files[0].name);
     var reader = new FileReader();
 
@@ -56,6 +85,100 @@ document.getElementById('fileUpload').addEventListener('change', handleFileSelec
 
 var tempkeys=[];
 var hot;
+
+/* custom editor */
+var map;
+var drawnItems;
+var tempValue;
+
+var pointTransform = function (feature, latlng) {
+        return L.marker(latlng);
+    }
+
+
+var MapEditor = Handsontable.editors.BaseEditor.prototype.extend();
+
+MapEditor.prototype.init = function() {
+
+    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib });
+      
+            map = new L.Map('map', { center: new L.LatLng(51.505, -0.04), zoom: 13 });
+            drawnItems = L.featureGroup().addTo(map);
+    L.control.layers({
+        'osm': osm.addTo(map)
+    }, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: true }).addTo(map);
+    map.addControl(new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems,
+            poly: {
+                allowIntersection: false
+            }
+        },
+        draw: {
+            polygon: {
+                allowIntersection: false,
+                showArea: true
+            }
+        }
+    }));
+
+    map.on(L.Draw.Event.CREATED, function (event) {
+        var layer = event.layer;
+
+        drawnItems.addLayer(layer);
+    });
+};
+
+MapEditor.prototype.prepare = function() {
+    Handsontable.editors.BaseEditor.prototype.prepare.apply(this, arguments);
+};
+
+MapEditor.prototype.getValue = function() {
+ 
+    var tempgeo = drawnItems.toGeoJSON();
+    tempgeo = tempgeo['features'];
+    if (tempgeo.length > 1) {
+        console.log('only one plz');
+    }
+    if (tempgeo.length == 0) {
+        return false;
+    }
+    tempgeo = tempgeo[0]['geometry'];
+    var results = JSON.stringify(tempgeo);
+    this.instance.updateSettings('outsideClickDeselects', true);
+    this.instance.setDataAtCell(this.row, this.col, results); // otherwise doesn't set it a second time?
+    return results;
+};
+
+MapEditor.prototype.setValue = function(value) {
+
+    drawnItems.clearLayers();
+    if (value != '') {
+    drawnItems.addLayer(L.GeoJSON.geometryToLayer(JSON.parse(value), pointTransform));
+    map.fitBounds(drawnItems.getBounds());
+    }
+    this.instance.updateSettings('outsideClickDeselects', false);
+
+};
+
+MapEditor.prototype.open = function() {
+    $('#mapModal').modal('show');
+    this.instance.updateSettings('outsideClickDeselects', false);
+};
+
+MapEditor.prototype.close = function() {
+    this.instance.updateSettings('outsideClickDeselects', true);
+};
+
+MapEditor.prototype.focus = function() {
+  return true;
+};
+
+$('#mapModal').on('shown.bs.modal', function (event) {
+    map.invalidateSize();    
+})
 
 function loadGeojsonInTable(json) {
     //reset data
@@ -85,8 +208,13 @@ function loadGeojsonInTable(json) {
     tempkeys.sort();
     
     var dataColumns = [];
+  /* prepare columns */
     for (key in tempkeys) {
-        dataColumns.push({data: tempkeys[key], type: 'text', width: 100});
+        var tempColumn = {data: tempkeys[key], type: 'text', width: 100};
+        if (tempkeys[key] == '@geometry') {
+            tempColumn['editor'] = MapEditor;
+        }
+        dataColumns.push(tempColumn);
     }
 
  
@@ -112,19 +240,20 @@ function loadGeojsonInTable(json) {
 function saveGeojson() {
     var fileName = $('#fileName').val();
     var completeKeys = $('#completeKeys').is(':checked');
-    
+    var significantDigits = $('#significantDigits').val();
     var tempGeojson = { "type": "FeatureCollection", "features": [] };
 
     var data = hot.getData();
     var headers = hot.getColHeader();
+   
+    $(data).each(function(j, k) {
         var tempFeature = { "type": "Feature", "properties": {}, "geometry": {} };
-
-        $(data).each(function(j, k) {
         $(k).each(function(l, v) {
             if (headers[l] === "@geometry") {
                 tempFeature['geometry'] = JSON.parse(v);
                 return;
             }
+            if (v === null) v = "";
             if (!completeKeys && v == "") {
                 return;
             }
@@ -132,10 +261,12 @@ function saveGeojson() {
         });
         tempGeojson['features'].push(tempFeature);
      });
-    var txt = JSON.stringify(tempGeojson);
+    var txt = JSON.stringify(tempGeojson, function(key, val) {
+        if (isNaN(+key)) return val;
+        return val.toFixed ? Number(val.toFixed(significantDigits)) : val;
+    });
     console.log(txt);
     var blob = new Blob([txt], {type: "application/vnd.geo+json;charset=utf-8"});
-   saveAs(blob, fileName);
-
+    saveAs(blob, fileName);
 }
 </script>
