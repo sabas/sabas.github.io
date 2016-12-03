@@ -5,8 +5,9 @@ layout: default
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.29.0/handsontable.full.min.css" />
 
-<script src="https://cdn.rawgit.com/mindmup/editable-table/master/mindmup-editabletable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.29.0/handsontable.full.min.js"></script>
 
 <div class="container">
 <div class="row">
@@ -14,23 +15,24 @@ layout: default
 	<p></p>
 </div>
 <div class="row" id="stepUpload">
+<div class="col-md-6">
 <form class="form-inline" action="#">
 <input type="file" id="fileUpload" class="form-control"/>
 </form>
 </div>
+<div class="col-md-6">
+</div>
+</div>
 
-<div class="row" id="stepEdit">
-<table id="contentTable" class="table table-striped">
-<thead></thead>
-<tbody></tbody>
-</table>
+<div class="row" >
+<div id="stepEdit"></div>
 </div>
 <div class="row">
-<form class="form-inline">
+<div class="form-inline">
 <input type="text" id="fileName" value="" class="form-control"/>
 <input type="checkbox" id="completeKeys" checked/> Persist empty cells
-<button onclick='saveGeojson()' class="btn btn-primary">Save</button>
-</form>
+<button onclick='saveGeojson();' class="btn btn-primary">Save</button>
+</div>
 </div>
 </div>
 <script>
@@ -52,10 +54,15 @@ layout: default
 
 document.getElementById('fileUpload').addEventListener('change', handleFileSelect, false);
 
-function loadGeojsonInTable(json) {
+var tempkeys=[];
+var hot;
 
-    console.log(json);
-    var tempkeys=[];
+function loadGeojsonInTable(json) {
+    //reset data
+    $('#stepEdit').html('');
+    $(".htContextMenu").remove();
+    tempkeys = [];
+   
     var temparray=[];
     tempkeys.push("@geometry");
 
@@ -73,31 +80,33 @@ function loadGeojsonInTable(json) {
         });
         temparray.push(temprow);
     });
-    console.log(temparray);
+
 
     tempkeys.sort();
-    temphead = '<tr>';
-    $.each(tempkeys,function(j,k) {
-        
-            temphead += '<th>'+k+'</th>';
-    });
-    temphead += '</tr>';
-    $('#contentTable thead').append(temphead);
- 
-    $.each(temparray,function(i,v) {
-        var temphtml='<tr>';
-        $.each(tempkeys,function(j,k) {
-            if (v[k] === undefined) {
-                temphtml+='<td></td>';
-            } else {
-                temphtml+='<td>'+v[k]+'</td>';
-            }
-        });
-        temphtml += '</tr>';
-        $('#contentTable tbody').append(temphtml);
-    });
+    
+    var dataColumns = [];
+    for (key in tempkeys) {
+        dataColumns.push({data: tempkeys[key], type: 'text', width: 100});
+    }
 
-    $('#contentTable').editableTableWidget({editor: $('<textarea>')});
+ 
+  var hotElement = document.querySelector('#stepEdit');
+  var hotElementContainer = hotElement.parentNode;
+  var hotSettings = {
+    data: temparray,
+    columns: dataColumns,
+    stretchH: 'all',
+    width: '100%',
+    autoWrapRow: true,
+    height: 300,
+    maxRows: 22,
+    rowHeaders: true,
+    colHeaders: tempkeys,
+    contextMenu: true
+};
+
+  hot = new Handsontable(hotElement, hotSettings);
+
 }
 
 function saveGeojson() {
@@ -105,35 +114,28 @@ function saveGeojson() {
     var completeKeys = $('#completeKeys').is(':checked');
     
     var tempGeojson = { "type": "FeatureCollection", "features": [] };
-    
-    console.log(fileName); console.log(completeKeys);
-    
-    var keyArray = [];
-    
-    $('#contentTable thead tr th').each(function(i,v) {
-        keyArray.push(v.innerText);
-    });
-    console.log(keyArray);
-    $('#contentTable tbody tr').each(function(i, v) {
+
+    var data = hot.getData();
+    var headers = hot.getColHeader();
         var tempFeature = { "type": "Feature", "properties": {}, "geometry": {} };
-        $(v).find('td').each(function(j, k) {
-            if (keyArray[j] === "@geometry") {
-                tempFeature['geometry'] = JSON.parse(k.innerText);
+
+        $(data).each(function(j, k) {
+        $(k).each(function(l, v) {
+            if (headers[l] === "@geometry") {
+                tempFeature['geometry'] = JSON.parse(v);
                 return;
             }
-            var tempValue = k.innerText;
-            if (!completeKeys && tempValue == "") {
+            if (!completeKeys && v == "") {
                 return;
             }
-            tempFeature['properties'][keyArray[j]] = tempValue;
-            console.log(keyArray[j], k.innerText);
+            tempFeature['properties'][headers[l]] = v;
         });
         tempGeojson['features'].push(tempFeature);
-    });
-
+     });
     var txt = JSON.stringify(tempGeojson);
     console.log(txt);
     var blob = new Blob([txt], {type: "application/vnd.geo+json;charset=utf-8"});
-    saveAs(blob, fileName);
+   saveAs(blob, fileName);
+
 }
 </script>
