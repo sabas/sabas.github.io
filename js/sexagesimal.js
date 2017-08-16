@@ -1,4 +1,4 @@
-(function(e){if("function"==typeof bootstrap)bootstrap("sexagesimal",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makeSexagesimal=e}else"undefined"!=typeof window?window.sexagesimal=e():global.sexagesimal=e()})(function(){var define,ses,bootstrap,module,exports;
+﻿(function(e){if("function"==typeof bootstrap)bootstrap("sexagesimal",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makeSexagesimal=e}else"undefined"!=typeof window?window.sexagesimal=e():global.sexagesimal=e()})(function(){var define,ses,bootstrap,module,exports;
 return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = element;
 module.exports.pair = pair;
@@ -35,18 +35,33 @@ function format(x, dim) {
 function search(x, dims, r) {
     if (!dims) dims = 'NSEW';
     if (typeof x !== 'string') return { val: null, regex: r };
-    r = r || /[\s\,]*([\-|\—|\―]?[0-9.]+)°? *(?:([0-9.]+)['’′‘] *)?(?:([0-9.]+)(?:''|"|”|″) *)?([NSEW])?/gi;
+    r = r || /[\s\,]*([NSEW])?\s*([\-|\—|\―]?[0-9.]+)°?\s*(?:([0-9.]+)['’′‘]\s*)?(?:([0-9.]+)(?:''|"|”|″)\s*)?([NSEW])?/gi;
     var m = r.exec(x);
+
     if (!m) return { val: null, regex: r };
-    else if (m[4] && dims.indexOf(m[4]) === -1) return { val: null, regex: r };
-    else return {
-        val: (((m[1]) ? parseFloat(m[1]) : 0) +
-            ((m[2] ? parseFloat(m[2]) / 60 : 0)) +
-            ((m[3] ? parseFloat(m[3]) / 3600 : 0))) *
-            ((m[4] && m[4] === 'S' || m[4] === 'W') ? -1 : 1),
+    else {
+        var deg = ((m[2]) ? parseFloat(m[2]) : 0);
+        var min = ((m[3]) ? parseFloat(m[3]) / 60 : 0);
+        var sec = ((m[4]) ? parseFloat(m[4]) / 3600 : 0);
+        var dim = '';
+        if (dims.indexOf(m[5]) !== -1) {
+            dim = ((m[5] && m[5] === 'S' || m[5] === 'W') ? -1 : 1);
+        }
+        if (dims.indexOf(m[1]) !== -1) {
+            dim = ((m[1] && m[1] === 'S' || m[1] === 'W') ? -1 : 1);
+        }
+        if (dim === '') return { val: null, regex: r };
+
+        return {
+        val: ((deg +
+            min +
+            sec) *
+            dim
+            ),
         regex: r,
         raw: m[0],
-        dim: m[4]
+        dim: dim
+        }
     };
 }
 
