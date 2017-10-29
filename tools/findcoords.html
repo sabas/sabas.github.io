@@ -6,6 +6,8 @@ layout: default
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js'></script>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css' rel='stylesheet' />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-hash/0.2.1/leaflet-hash.min.js"></script>
+
 <script src='{{site.baseurl}}/js/sexagesimal.js'></script>
 <script src='{{site.baseurl}}/js/openlocationcode.js'></script>
 
@@ -87,7 +89,7 @@ function writeCoord(e){
 }
 
     var map = L.map('map').setView([44, 9], 7);
-
+    var hash = new L.Hash(map);
     var osmTile= L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
