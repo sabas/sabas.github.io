@@ -1,0 +1,52 @@
+---
+title: Coordinate Conversion
+date: 2021-09-19T13:50:28+02:00
+draft: false
+---
+<script src='/js/sexagesimal.js'></script>
+<script src='https://code.jquery.com/jquery-3.6.0.slim.min.js'></script>
+<style>
+</style>
+<div class="row">
+
+    <h1>Coordinate convert</h1>
+    <p>From sexagesimal to decimal (in column lat \t lon \n)</p>
+
+<div class="col-md-6">
+<label for="from" class="control-label">From</label>
+<textarea id="from" class="form-control" ></textarea>
+
+</div>
+<div class="col-md-6">
+<label for="to" class="control-label">To</label>
+<textarea id="to" class="form-control" ></textarea>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<input type="button" onclick="convert()" value="Convert" class="btn btn-lg btn-primary"/>
+</div>
+</div>
+
+<script>
+function convert(){
+    var from=$('#from').val();
+
+    var arrList=from.split("\n");
+    var results = '';
+    $.each(arrList,function (i,elm){ //split colonne
+
+        var tok=elm.split("\t");
+        if(tok[0]=="") {
+            results += '\n';
+            return;
+        }
+        var coord1 = sexagesimal(tok[0].trim());
+        var coord2 = sexagesimal(tok[1].trim());
+        results += coord1.toFixed(5) + ', ' + coord2.toFixed(5) + '\n';
+    });
+    $('#to').val(results);
+}
+
+</script>
