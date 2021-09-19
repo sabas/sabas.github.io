@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stefano Sabatini · Landing Page</title>
+  <meta name="description" content="Landing Page">
+  <meta name="author" content="Stefano Sabatini">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../css/fonts.css" type="text/css">
+  <link rel="stylesheet" href="../../css/normalize.css">
+  <link rel="stylesheet" href="../../css/all.min.css">
+  <link rel="stylesheet" href="../../css/vncnt.css">
+  
+   
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+</head>
+
+<body>
+    <div id="menu" style="float:right; padding: 1em;">
+    <a href="../../tools">Tools</a>
+</div>
+    
+<style>
+</style>
+<div class="row">
+<div class="col-lg-12">
+			<h1>Tiles Calculator</h1>
+			<p>Source: <a href="http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames" target="_blank">OSM Wiki</a></p>
+</div>
+</div>
+	<div class="row">
+		<div class="col-lg-6">
+            <p>Coordinates string (zoom/lat/lon)</p>
+            <input id="cmap" type="text" value="" onchange="calcTile(this.value)" class="form-control"/>
+
+		</div>
+		<div class="col-lg-6">
+            <p>Tiles string (zoom/x/y)</p>
+            <input id="ctile" type="text" value="" onchange="calcMap(this.value)" class="form-control"/>
+		</div>
+	</div>
+
+<script>
+function calcTile(val){
+var d=val.split('/');
+var dtile=d[0]+'/';
+dtile+=long2tile(d[2],d[0]);
+dtile+='/';
+dtile+=lat2tile(d[1],d[0]);
+document.getElementById('ctile').value=dtile;
+}
+
+function calcMap(val){
+var d=val.split('/');
+d[2]=tile2long(d[2],d[0]);
+d[1]=tile2lat(d[1],d[0]);
+document.getElementById('cmap').value=d.join('/');
+}
+
+/* http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames */
+
+function long2tile(lon,zoom1) { 
+tt = Number(lon);
+return (Math.floor((tt+180)/360*Math.pow(2,zoom1)));
+}
+
+function lat2tile(lat,zoom2)  { 
+return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom2))); 
+}
+
+function tile2long(x,z) {
+  return (x/Math.pow(2,z)*360-180);
+ }
+ 
+function tile2lat(y,z) {
+  var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
+  return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
+ }
+</script>
+
+</body>
+ </html>

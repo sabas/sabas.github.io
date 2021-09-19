@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stefano Sabatini · Landing Page</title>
+  <meta name="description" content="Landing Page">
+  <meta name="author" content="Stefano Sabatini">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../css/fonts.css" type="text/css">
+  <link rel="stylesheet" href="../../css/normalize.css">
+  <link rel="stylesheet" href="../../css/all.min.css">
+  <link rel="stylesheet" href="../../css/vncnt.css">
+  
+   
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+</head>
+
+<body>
+    <div id="menu" style="float:right; padding: 1em;">
+    <a href="../../tools">Tools</a>
+</div>
+    <script src='../../js/sexagesimal.js'></script>
+<script src='https://code.jquery.com/jquery-3.6.0.slim.min.js'></script>
+<style>
+</style>
+<div class="row">
+
+    <h1>Coordinate convert</h1>
+    <p>From sexagesimal to decimal (in column lat \t lon \n)</p>
+
+<div class="col-md-6">
+<label for="from" class="control-label">From</label>
+<textarea id="from" class="form-control" ></textarea>
+
+</div>
+<div class="col-md-6">
+<label for="to" class="control-label">To</label>
+<textarea id="to" class="form-control" ></textarea>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<input type="button" onclick="convert()" value="Convert" class="btn btn-lg btn-primary"/>
+</div>
+</div>
+
+<script>
+function convert(){
+    var from=$('#from').val();
+
+    var arrList=from.split("\n");
+    var results = '';
+    $.each(arrList,function (i,elm){ //split colonne
+
+        var tok=elm.split("\t");
+        if(tok[0]=="") {
+            results += '\n';
+            return;
+        }
+        var coord1 = sexagesimal(tok[0].trim());
+        var coord2 = sexagesimal(tok[1].trim());
+        results += coord1.toFixed(5) + ', ' + coord2.toFixed(5) + '\n';
+    });
+    $('#to').val(results);
+}
+
+</script>
+
+</body>
+ </html>

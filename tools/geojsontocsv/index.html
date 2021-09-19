@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stefano Sabatini · Landing Page</title>
+  <meta name="description" content="Landing Page">
+  <meta name="author" content="Stefano Sabatini">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../css/fonts.css" type="text/css">
+  <link rel="stylesheet" href="../../css/normalize.css">
+  <link rel="stylesheet" href="../../css/all.min.css">
+  <link rel="stylesheet" href="../../css/vncnt.css">
+  
+   
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+</head>
+
+<body>
+    <div id="menu" style="float:right; padding: 1em;">
+    <a href="../../tools">Tools</a>
+</div>
+    <script src='https://code.jquery.com/jquery-3.6.0.slim.min.js'></script>
+<script type="text/javascript" src="http://code.jquerygeo.com/jquery.geo-1.0.0-rc1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/filesaver.js/1.3.3/FileSaver.min.js"></script>
+<style>
+
+#map{max-height:400px; overflow-y:scroll;overflow-x:hidden;}
+</style>
+
+      <div class="row">
+        <div class="col-lg-6">
+<h1>GeoJSON to DSV</h1>
+<p>Generate a csv from a GeoJSON file with points: first two columns get the coordinates, then a key per column.</p>
+<p>In the box on the right you'll find the result, with Save button you download the file.</p>
+<p>If the geometry isn't a point, it will calculate the centroid before (and if it's a multipolygon, the centroid will be calculated onto its bounding box).</p>
+
+
+<form id="form" name="form">
+<input type="radio" name="choose" value="CSV">CSV
+<input type="radio" name="choose" value="TSV" checked>TSV<br/>
+<input type="file" class="input-file" id="files" name="files" />
+<input type="button" class="btn btn-primary" onclick="jsload()" value="Execute"/>
+<input type="button" class="btn  btn-primarys" name="save" id="save" value="Save" onclick="jssave()"/>
+</form>
+</div>
+<div class="col-lg-6" id="map">
+</div>
+</div>
+
+<script>
+var tempkeys=[];
+var temparray=[];
+
+var tempcsv='';
+
+/*
+ * Funzione principale
+ * crea un array di chiavi ed un array con tutte le righe
+ * poi lo trasforma in stringa
+ */
+
+function geo2csv(json){
+    return geo2dsv(json,",");
+}
+function geo2tsv(json){
+    return geo2dsv(json,"\t");
+}
+function geo2dsv(json,sep)
+{
+    tempkeys.push("lon");
+    tempkeys.push("lat");
+
+    //parsing
+    $.each(json.features,function(i,v){
+        var geo=v.geometry;
+        if (geo.type!='Point')
+        {
+            if(geo.type=='MultiPolygon') geo=$.geo.polygonize($.geo.bbox(geo));
+            geo=$.geo.centroid(geo);
+        }
+        geo=geo.coordinates;
+        var prop=v.properties;
+
+        var temprow={};
+        temprow["lon"]=geo[0].toFixed(6);
+        temprow["lat"]=geo[1].toFixed(6);
+
+        $.each(prop,function(k,v){
+            if (tempkeys.indexOf(k) == -1) {
+               tempkeys.push(k);
+            }
+            temprow[k]=v;
+        });
+        temparray.push(temprow);
+    });
+
+    tempcsv='"'+tempkeys.join('"'+sep+'"')+'"\n';
+    $.each(temparray,function(k,v){
+        tempr='';
+        for (var tk=0;tk<tempkeys.length;tk++){
+            if (tempkeys[tk] in v) {
+                if(tk>0)tempr+=sep;
+                var tmpval=v[tempkeys[tk]];
+                if(typeof tmpval ==='number')
+                tempr+=tmpval;
+                else
+                tempr+='"'+tmpval+'"';
+            }
+            else tempr+=sep;
+        }
+        tempcsv+=tempr+"\n";
+    });
+    return tempcsv;
+}
+
+//converte gli accapi nel tag html
+function nl2br(str, is_xhtml) {
+  //http://phpjs.org/functions/nl2br/
+  var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>'; // Adjust comment to avoid issue on phpjs.org display
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+
+//carica il file
+function jsload()
+{
+    var f= document.getElementById("files").files[0];
+    if (f)
+    {
+        var r = new FileReader();
+        r.onload = function(e)
+        {
+            var obj=JSON.parse(e.target.result);
+            var w=$('input[name="choose"]:checked').val();
+            var l;
+            if (w==="TSV")
+            l=geo2tsv(obj);
+            else l=geo2csv(obj);
+            $('#map').html(nl2br(l,true));
+        }
+
+        r.readAsText(f);
+    }
+    else { alert ( "Failed to load file" ); }
+}
+
+//salva il testo in un file e lo scarica
+function jssave()
+{
+    var txt= tempcsv;
+    if(txt=="")return;
+    var blob = new Blob([txt], {type: "text/javascript;charset=utf-8"});
+    saveAs(blob, "map.csv");
+}
+</script>
+
+</body>
+ </html>

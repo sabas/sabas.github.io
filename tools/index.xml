@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tools on Stefano Sabatini · Landing Page</title>
+    <link>https://stefanosabatini.com/tools/</link>
+    <description>Recent content in Tools on Stefano Sabatini · Landing Page</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 19 Sep 2021 13:50:28 +0200</lastBuildDate>
+    
+	<atom:link href="https://stefanosabatini.com/tools/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bboxcalculator</title>
+      <link>https://stefanosabatini.com/tools/bboxcalculator/</link>
+      <pubDate>Sun, 19 Sep 2021 13:50:28 +0200</pubDate>
+      
+      <guid>https://stefanosabatini.com/tools/bboxcalculator/</guid>
+      <description>.row{ font-family:monospace; display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; align-content: stretch; } .row.map{height:450px;} #map{position:absolute;width:90%;height:400px;float:left;}  BBOX CALCULATOR Activate the tool (third button on map), then click and drag to draw a bounding box
+  DIMENSION (m)  ASPECT RATIO  PIXEL SIZE (max 1280x720)  BBOX  BBOX INVERTED  JS BBOX  JS BBOX INVERTED  POLY BBOX        var map = L.</description>
+    </item>
+    
+    <item>
+      <title>Coordinate Conversion</title>
+      <link>https://stefanosabatini.com/tools/parsecoords/</link>
+      <pubDate>Sun, 19 Sep 2021 13:50:28 +0200</pubDate>
+      
+      <guid>https://stefanosabatini.com/tools/parsecoords/</guid>
+      <description>Coordinate convertFrom sexagesimal to decimal (in column lat \t lon \n)
+FromTofunction convert(){var from=$(&#39;#from&#39;).val();var arrList=from.split(&#34;\n&#34;);var results = &#39;&#39;;$.each(arrList,function (i,elm){ //split colonnevar tok=elm.split(&#34;\t&#34;);if(tok[0]==&#34;&#34;) {results += &#39;\n&#39;;return;}var coord1 = sexagesimal(tok[0].trim());var coord2 = sexagesimal(tok[1].trim());results += coord1.toFixed(5) + &#39;, &#39; + coord2.toFixed(5) + &#39;\n&#39;;});$(&#39;#to&#39;).val(results);}</description>
+    </item>
+    
+    <item>
+      <title>Find Coordinates</title>
+      <link>https://stefanosabatini.com/tools/findcoords/</link>
+      <pubDate>Sun, 19 Sep 2021 13:50:28 +0200</pubDate>
+      
+      <guid>https://stefanosabatini.com/tools/findcoords/</guid>
+      <description>.row{ font-family:monospace; display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; align-content: stretch; } .row{height:450px;} #map{ position:absolute; width:90%; height:400px; float:left; cursor: crosshair !important; }   FIND COORDINATES Just click on the map
+COO  LAT  LON  DMS  OLC  LOCODE        function pad (str, max) { str = str.toString(); return str.length = 0 ?</description>
+    </item>
+    
+    <item>
+      <title>GeoJson to DSV</title>
+      <link>https://stefanosabatini.com/tools/geojsontocsv/</link>
+      <pubDate>Sun, 19 Sep 2021 13:50:28 +0200</pubDate>
+      
+      <guid>https://stefanosabatini.com/tools/geojsontocsv/</guid>
+      <description>#map{max-height:400px; overflow-y:scroll;overflow-x:hidden;}  GeoJSON to DSV Generate a csv from a GeoJSON file with points: first two columns get the coordinates, then a key per column.
+In the box on the right you&#39;ll find the result, with Save button you download the file.
+If the geometry isn&#39;t a point, it will calculate the centroid before (and if it&#39;s a multipolygon, the centroid will be calculated onto its bounding box).</description>
+    </item>
+    
+    <item>
+      <title>Tiles Calculator</title>
+      <link>https://stefanosabatini.com/tools/tilecalc/</link>
+      <pubDate>Sun, 19 Sep 2021 13:50:28 +0200</pubDate>
+      
+      <guid>https://stefanosabatini.com/tools/tilecalc/</guid>
+      <description>Tiles Calculator Source: OSM Wiki
+  Coordinates string (zoom/lat/lon)
+ Tiles string (zoom/x/y)
+   function calcTile(val){ var d=val.split(&#39;/&#39;); var dtile=d[0]+&#39;/&#39;; dtile+=long2tile(d[2],d[0]); dtile+=&#39;/&#39;; dtile+=lat2tile(d[1],d[0]); document.getElementById(&#39;ctile&#39;).value=dtile; } function calcMap(val){ var d=val.split(&#39;/&#39;); d[2]=tile2long(d[2],d[0]); d[1]=tile2lat(d[1],d[0]); document.getElementById(&#39;cmap&#39;).value=d.join(&#39;/&#39;); } /* http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames */ function long2tile(lon,zoom1) { tt = Number(lon); return (Math.floor((tt+180)/360*Math.pow(2,zoom1))); } function lat2tile(lat,zoom2) { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom2))); } function tile2long(x,z) { return (x/Math.pow(2,z)*360-180); } function tile2lat(y,z) { var n=Math.</description>
+    </item>
+    
+  </channel>
+</rss>
