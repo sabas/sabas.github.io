@@ -121,21 +121,11 @@ function writeCoord(e){
     var osmTile= L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    var realVista = L.tileLayer.wms("http://213.215.135.196/reflector/open/service?", {
-		    layers: 'rv1',
-		    format: 'image/jpeg',attribution: 'RealVista1.0 WMS OPEN di <a href="http://www.realvista.it">e-GEOS SpA</a>'
-	    });
-    var layerControl = new L.Control.Layers({
-		    'OSM': osmTile,
-		    'Satellite': realVista
-	    }, null, {position: 'topright'});
-
-    layerControl.addTo(map);
 
     map.on('click', writeCoord);
 
     var searchControl = new L.Control.Search({
-			url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+			url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
 			jsonpParam: 'json_callback',
 			propertyName: 'display_name',
 			propertyLoc: ['lat','lon'],
